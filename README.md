@@ -5,4 +5,8 @@ This is my first project. It will find meteor landing sites.
 
 This pachange requires Python 3 and the Requests package.
 
-`python3 find-meteors-near-me.py`
+First, install pipenv and then:
+```
+pipenv install
+pipenv run pyhton find-,eteors-near-me.pu
+```
