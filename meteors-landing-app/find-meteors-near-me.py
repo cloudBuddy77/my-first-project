@@ -16,24 +16,25 @@ def calc_dist(lat1, lon1, lat2, lon2):
 def get_dist(meteor):
     return meteor.get('dist', math.inf)
 
-my_loc = (18.520760, 73.855408)
+if __name__ == "__main__":    
+ my_loc = (18.520760, 73.855408)
 
-meteor_resp=requests.get("https://data.nasa.gov/resource/gh4g-9sfh.json")
-meteor_resp_json=meteor_resp.json()
+ meteor_resp=requests.get("https://data.nasa.gov/resource/gh4g-9sfh.json")
+ meteor_resp_json=meteor_resp.json()
 
-for meteor in meteor_resp_json:
-    if not ('reclat' in meteor and 'reclong' in meteor):
-        continue
-    meteor['dist']=calc_dist(float(meteor['reclat']), float(meteor['reclong']), my_loc[0], my_loc[1])
+ for meteor in meteor_resp_json:
+     if not ('reclat' in meteor and 'reclong' in meteor):
+         continue
+     meteor['dist']=calc_dist(float(meteor['reclat']), float(meteor['reclong']), my_loc[0], my_loc[1])
 
 
-meteor_resp_json.sort(key=get_dist)
+ meteor_resp_json.sort(key=get_dist)
 
-nearestTen = meteor_resp_json[0:10]
-print("Nearest 10 Meteors:", nearestTen)
+ nearestTen = meteor_resp_json[0:10]
+ print("Nearest 10 Meteors:", nearestTen)
 
-farthestTen = meteor_resp_json[-1:-11:-1]
-print("Farthest 10 Meteors:", farthestTen)
+ farthestTen = meteor_resp_json[-1:-11:-1]
+ print("Farthest 10 Meteors:", farthestTen)
 
-withoutLocData = len([m for m in meteor_resp_json if 'dist' not in m]) 
-print(withoutLocData, "Meteors are without location data")
+ withoutLocData = len([m for m in meteor_resp_json if 'dist' not in m]) 
+ print(withoutLocData, "Meteors are without location data")
